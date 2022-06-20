@@ -1,5 +1,7 @@
 package _01_methods._3_rain_game;
 
+import java.util.Random;
+
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -45,19 +47,19 @@ public class RainGame extends PApplet {
     static final int WIDTH = 600;
     static final int HEIGHT = 600;
 
-    int score = 0;
+    Random ran = new Random();
     int bucketWidth = 50;
     int bucketHeight;
     PImage bucket;
-    int y;
-    int x;
+    int y = 0;
+    int x = ran.nextInt(600);
 
     // Sets the size of your canvas
     @Override
     public void settings() {
         size(WIDTH, HEIGHT);
     }
-
+    int score = 0;
     @Override
     public void setup() {
 
@@ -65,7 +67,35 @@ public class RainGame extends PApplet {
 
     @Override
     public void draw() {
-
+    	background(0, 0, 0);
+    	boolean hasBeenCounted = false;
+    	fill(0, 0, 255);
+        ellipse(x, y, 25, 40);
+        y=y+7;
+        if (y >= 620) {
+        	x = ran.nextInt(600);
+        	y = 0;
+        	hasBeenCounted = false;
+        }
+        fill(255, 0, 0);
+        rect(mouseX, 525, 75, 75);
+        if (x-12.5 > mouseX && x+12.5 < mouseX+75 && y-12.5 > 525 && y+12.5 < 600 && !hasBeenCounted) {
+        	score++;
+        	
+        	hasBeenCounted = true;
+        }
+        else if (y-12.5 > 525 && (x-12.5 < mouseX || x+12.5 > mouseX+75)) {
+        	
+        	score--;
+        }
+        if (score < 0) {
+        	score = 0;
+        }
+        fill (255, 255, 255);
+        textSize(16);
+        text("Score: " + score, 20, 20);
+        textSize(10);
+        text("If you catch a drop, you'll get 7 points, but if you let one drop, you'll lose up to 12 points.", 100, 20);
     }
 
     static public void main(String[] args) {
