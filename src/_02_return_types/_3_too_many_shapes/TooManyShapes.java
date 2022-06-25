@@ -13,10 +13,13 @@ public class TooManyShapes {
 
 	public static void main(String[] args) {
 		//1. Ask the user how many sides they want their shape to be
-		
+		String stringSides = JOptionPane.showInputDialog("How many sides do you want your shape to be?");
+		int sides = Integer.parseInt(stringSides);
 		//2. Ask the user how many shapes they want
-		
+		String stringShapes = JOptionPane.showInputDialog("How many shapes do you want?");
+		int numShapes = Integer.parseInt(stringShapes);
 		//3. Call canMakeShape() and save what is returned into a variable
+		canMakeShape(sides);
 		
 		//4. If the shape CAN be drawn
 		

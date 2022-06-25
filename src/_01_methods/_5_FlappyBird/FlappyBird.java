@@ -3,6 +3,7 @@ package _01_methods._5_FlappyBird;
 import java.util.Random;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class FlappyBird extends PApplet {
     static final int WIDTH = 800;
@@ -14,7 +15,7 @@ public class FlappyBird extends PApplet {
 	int gravity = 1;
 	int pipeX = 800;
 	int upperPipeHeight = ran.nextInt(400 - 100 + 1)+100;
-	int pipeGap = 180;
+	int pipeGap = 130;
 	boolean isDead = false;
 	int score = 0;
 	
@@ -23,40 +24,41 @@ public class FlappyBird extends PApplet {
     public void settings() {
         size(WIDTH, HEIGHT);
     }
-
+    PImage back;
+    PImage pipeBottom;
+    PImage pipeTop;
+    PImage bird;
     @Override
     public void setup() {
-    	
+    	back = loadImage("flappyBackground.jpg");
+    	pipeBottom = loadImage("bottomPipe.png");
+        pipeTop = loadImage("topPipe.png");
+        bird = loadImage("bird.png");
+        bird.resize(50,50);
+        back.resize(WIDTH, HEIGHT);
     }
 
     @Override
     public void draw() {
-    	int lowerY = upperPipeHeight+pipeGap; 
-        if (birdY-25 <= upperPipeHeight && birdX+25 > pipeX && birdX-25 < (pipeX+40)){
+    	int lowerY = upperPipeHeight+pipeGap;
+        if (birdY <= upperPipeHeight && birdX > pipeX && birdX < (pipeX+40)){
         	isDead = true; 
         }
-        else if (birdY-25 >= (upperPipeHeight+pipeGap) && birdX+25 > pipeX && birdX-25 < (pipeX+40)) {
+        else if (birdY >= (upperPipeHeight+pipeGap) && birdX > pipeX && birdX < (pipeX+40)) {
             isDead = true;
         }
-        else if (birdY+25 > 590) {
+        else if (birdY > 590) {
         	isDead = true;
         }
           
-        if (isDead == true) {
-        	birdY+=7;
-        	
-        }
         else {
-        	background(101, 154, 219);
+        	background(back);
         	birdYVelocity += gravity;
-        	fill(255, 255, 0);
-        	stroke(255, 255, 0);
-        	ellipse(birdX, birdY, 50, 50);
+        	image(bird, birdX-25, birdY-25);
         	birdY+=birdYVelocity;
         	fill(0, 255, 0);
-        	noStroke();
-    		rect(pipeX, 0, 40, upperPipeHeight);
-    		rect (pipeX, lowerY, 40, 600-lowerY);
+    		image(pipeTop, pipeX, 0, 40, upperPipeHeight);
+    		image(pipeBottom, pipeX, lowerY, 40, 600-lowerY);
     		pipeX-=3;
     		if (pipeX < -30) {
     			upperPipeHeight = ran.nextInt(400 - 100 + 1)+100;
@@ -67,7 +69,10 @@ public class FlappyBird extends PApplet {
     		fill(0, 0, 0);
     		text("Score: " + score, 20, 20);
         }
-    	
+        
+    	if (isDead == true) {
+    		System.exit(0);
+    	}
     }
     
     public void mousePressed() {
