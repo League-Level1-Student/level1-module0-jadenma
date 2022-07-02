@@ -2,6 +2,8 @@ package _01_methods._5_FlappyBird;
 
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -71,6 +73,7 @@ public class FlappyBird extends PApplet {
         }
         
     	if (isDead == true) {
+    		JOptionPane.showMessageDialog(null, "You died!");
     		System.exit(0);
     	}
     }
