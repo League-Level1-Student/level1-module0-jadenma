@@ -30,6 +30,7 @@ public class DuellingButtons implements ActionListener {
 		frame.add(panel);
 		// 2. Make the frame visible
 		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// 3. Set the text of the leftButton to "Click me!"
 		leftButton.setText("Click Me!");
 		// 4. Set the text of the rightButton to "Click me!"
